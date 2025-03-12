@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applied Jobs | Marketplace</title>
+    <link rel="stylesheet" href="{% static "styles.css" %}">
+    {% include "common/navbar.html" %}
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="max-w-6xl mx-auto py-10 px-6">
+        <h1 class="text-3xl font-semibold text-center mb-6">Your Applied Jobs</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for job in applications %}
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-2">{{ job.profession.name }}</h2>
+                <p class="text-gray-600"><strong>Candidate:</strong> {{ job.candidate.name }}</p>
+                <p class="text-gray-600 mt-2"><strong>Why Should We Hire You:</strong> {{ job.get_hired }}</p>
+            </div>
+            {% empty %}
+            <p class="text-center text-gray-500 col-span-full">No job applications found.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

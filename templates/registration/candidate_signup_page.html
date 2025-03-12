@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup | Marketplace</title>
+    <link rel="icon" type="image/x-icon" href={% static "icons8-favicon-94.png" %}>
+    <link rel="stylesheet" href="{% static "styles.css" %}">
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl my-4">
+        <!-- Page Title -->
+        <h2 class="text-3xl font-bold text-gray-800 text-center mb-8">Sign Up</h2>
+        
+        <!-- Error Message -->
+        <div class="text-red-500 font-bold text-center mb-4">
+            {% if error_message %}
+                {{ error_message }}
+            {% endif %}
+        </div>
+
+        <!-- Sign-Up Form -->
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Username</label>
+                {{ form.username }}
+                <p class="text-gray-500 text-xs mt-1">Required. 150 characters or fewer. Letters, digits, and @/./+/-/_ only.</p>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+                {{ form.password }}
+                <p class="text-gray-500 text-xs mt-1">Your password must be at least 8 characters long.</p>
+            </div>
+
+            <!-- Full Name -->
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Full Name</label>
+                {{ form.name }}
+            </div>
+
+            <!-- Profile Picture -->
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Profile Picture</label>
+                <div class="flex items-center">
+                    <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200 ">
+                        <img id="profile-pic-preview" src="{% static 'avatar.png' %}" alt="Profile Preview" class="w-full h-full object-cover">
+                    </div>
+                    <div style="width:10px"></div>
+                    {{ form.profile_pic }}
+                </div>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Date of Birth</label>
+                {{ form.dob }}
+                <p class="text-gray-500 text-xs mt-1">Format: YYYY-MM-DD</p>
+            </div>
+
+            <!-- Resume Upload -->
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Upload Resume</label>
+                {{ form.resume }}
+                <p class="text-gray-500 text-xs mt-1">Accepted formats: .md</p>
+            </div>
+
+            <!-- Markdown Content Upload -->
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Markdown Content</label>
+                {{ form.md_content }}
+                <p class="text-gray-500 text-xs mt-1">Accepted format: .md</p>
+            </div>
+
+            <!-- Experiences -->
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Experiences</label>
+                <div id="experience-input">{{form.experiences}}</div>
+                <p class="text-gray-500 text-sm mt-1"><a href="{% url "Formatter" %}" class="text-blue-600 underline" target="_blank">Click Here</a> to convert experience in acceptable format.</p>
+            </div>
+            
+
+            <!-- Submit Button -->
+            <div class="text-center mt-8">
+                <button type="submit" class="bg-green-500 text-white px-8 py-3 rounded-lg hover:bg-green-600 transition duration-300">Sign Up</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

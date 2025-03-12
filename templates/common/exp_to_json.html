@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert To Json | Marketplace</title>
+    <link rel="icon" type="image/x-icon" href={% static "icons8-favicon-94.png" %}>
+    <link rel="stylesheet" href="{% static "styles.css" %}">
+</head>
+<body class="flex justify-center flex-col items-center">
+    <div class="max-w-lg p-3 border-4 rounded-lg">
+        <div class="mb-6">
+            <div class="block text-gray-700 text-sm font-medium mb-2">Experiences</div>
+            <div class="text-gray-500 text-xs mt-1">Add Your experiences in the form below.</div>
+        </div>
+
+        <div class="font-bold text-green-500">
+            Copy the contents of the input-box and paste it into experience section of the form.
+        </div>
+
+        <div id="experience-input"></div>
+        
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-medium mb-2">Name</label>
+            <input type="text" id="exp-name" class="w-full p-2 border rounded" placeholder="e.g., Student">
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-medium mb-2">Tech Stack (comma-separated)</label>
+            <input type="text" id="exp-tech" class="w-full p-2 border rounded" placeholder="e.g., django, python, flutter">
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-medium mb-2">Description</label>
+            <input type="text" id="exp-desc" class="w-full p-2 border rounded" placeholder="e.g., studying">
+        </div>
+        <div class="mb-4 grid grid-cols-1 md:grid-cols-2 md:space-x-2">
+            <div>
+                <label class="block text-gray-700 text-sm font-medium mb-2">Start Year</label>
+                <input type="text" id="exp-startyear" class="w-full p-2 border rounded" placeholder="e.g., 2017">
+            </div>
+            <div>
+                <label class="block text-gray-700 text-sm font-medium mb-2">End Year</label>
+                <input type="text" id="exp-endyear" class="w-full p-2 border rounded" placeholder="For Ongoing, Put Current">
+            </div>
+        </div>
+        
+        <div class="flex justify-center">
+            <button type="button" onclick="addExperience()" class="bg-blue-500 text-white px-4 py-2 rounded">Add Experience</button>
+        </div>
+    </div>
+
+    <script>
+       {% comment %}  document.getElementById('id_profile_pic').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profile-pic-preview').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }); {% endcomment %}
+        let experiences = [];
+        
+        function addExperience() {
+            const name = document.getElementById("exp-name").value.trim();
+            const techStack = document.getElementById("exp-tech").value.trim().split(",");
+            const description = document.getElementById("exp-desc").value.trim();
+            const start_year = document.getElementById("exp-startyear").value;
+            const end_year = document.getElementById("exp-endyear").value;
+
+            if (name && description && techStack.length > 0) {
+                const experience = {
+                    "name": name,
+                    "tech_stack": techStack.map(tech => tech.trim()), 
+                    "description": description,
+                    "start_year":start_year,
+                    "end_year":end_year
+                };
+
+                experiences.push(experience);
+                document.getElementById("experience-input").innerText = JSON.stringify(experiences, null, 2);
+                
+                document.getElementById("exp-name").innerText = "";
+                document.getElementById("exp-tech").innerText = "";
+                document.getElementById("exp-desc").innerText = "";
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+    </script>
+</body>

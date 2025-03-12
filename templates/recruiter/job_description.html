@@ -1,0 +1,84 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Description | Marketplace</title>
+    <link rel="stylesheet" href="{% static "styles.css" %}">
+    <link rel="icon" type="image/x-icon" href={% static "icons8-favicon-94.png" %}>
+    {% include "recruiter/recruiter_navbar.html" %}
+    <style>
+        #md_content {
+            h1, h2, h3 {
+                font-size: 25px;
+                font-weight: bold;
+            }
+            pre{
+                background-color:grey;
+                padding:10px 0px 10px 10px;
+                border-radius:10px;
+                color:white;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="lg:mx-20 overflow-hidden">
+        <div class="flex flex-col items-center p-3 my-3">
+            <div class="lg:text-7xl text-3xl py-3">{{job.name}}</div>
+            <div class="lg:text-2xl text-xl font-thin text-gray-700">{{job.description}}</div>
+            <div class="lg:text-2xl text-xl font-thin text-gray-700">{{job.created_by.name}}</div>
+            <div class="font-thin xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl mb-4 text-gray-600">
+                {% for domains in job.techstack.all %}
+                    | {{domains}} | 
+                {% endfor %}
+            </div>
+            <div class="lg:text-5xl md:text-3xl text-xl font-light lg:w-screen w-3/5 flex justify-evenly p-3 flex-wrap lg:space-y-0 space-y-3">
+                <div class="p-5 rounded-xl bg-white shadow-md"><div class="flex justify-center">Salary - </div><div class="flex justify-center">{{job.salary|intcomma}}$ per Year</div></div>
+                <div class="p-5 rounded-xl bg-white shadow-md"><div class="flex justify-center">Experience - </div><div class="flex justify-center">{{job.experience}} Years</div></div>
+                <div class="p-5 rounded-xl bg-white shadow-md"><div class="flex justify-center">Location - </div><div class="flex justify-center">{{job.location}}</div></div>
+            </div>
+        </div>
+        <div class="lg:mx-10">
+            <div class="flex justify-center lg:text-4xl text-2xl my-6 text-gray-800">Description</div>
+            <div class="m-auto p-5 bg-white text-gray-700 rounded-lg my-3 mx-5 shadow-md" id="md_content">
+                {{html_format | safe}}
+            </div>
+        </div>
+            <div class="flex flex-col justify-center my-5 lg:p-5 m-auto">
+                <div class="lg:mx-10 bg-white shadow-lg rounded-lg py-4">
+                    <h2 class="lg:text-3xl font-bold text-center text-gray-800 pb-4">Applied Candidates List</h2>
+                    
+                    <div class="flex flex-col justify-center overflow-x-hidden mx-5">
+                        <table class="border border-gray-300 shadow-md rounded-lg lg:text-xl text-sm">
+                            <thead>
+                                <tr class="bg-blue-600 text-white m-auto">
+                                    <th class="p-3 text-left m-auto">Candidate</th>
+                                    <th class="p-3 text-left m-auto">Hired Status</th>
+                                    <th class="p-3 text-left m-auto">Applied At</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm">
+                                {% for application in applications %}
+                                    <tr class="border-b hover:bg-gray-100">
+                                        <td class="p-3 text-gray-800">{{ application.candidate.name }}</td>
+                                        <td class="p-3 text-gray-700">
+                                            {{ application.get_hired }}
+                                        </td>
+                                        <td class="p-3 text-gray-600">{{ application.applied_at|date:"M d, Y H:i" }}</td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="3" class="text-center p-4 text-gray-500">No candidates found.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Job Listing</title>
+    <link rel="stylesheet" href="{% static "styles.css" %}">
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-2xl mx-auto mt-10 bg-white p-8 rounded-lg shadow-md">
+        <h2 class="flex justify-center text-2xl mb-6 text-gray-700 font-sans">Create Job Listing</h2>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if error_message %}
+                <div class="text-red-500 font-semibold flex justify-center">{{error_message}}</div>
+            {% endif %}
+            <div class="mb-4">
+                <label for="id_name" class="block text-gray-600">Job Name</label>
+                {{ form.name }}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_description" class="block text-gray-600">Description</label>
+                {{ form.description }}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_location" class="block text-gray-600">Location</label>
+                {{ form.location }}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_md_content" class="block text-gray-600">Job Description File</label>
+                {{ form.md_content }}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_techstack" class="block text-gray-600">Tech Stack</label>
+                {{ form.techstack }}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_profession_type" class="block text-gray-600">Profession Type</label>
+                {{ form.profession_type }}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_salary" class="block text-gray-600">Salary</label>
+                {{ form.salary }}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_experience" class="block text-gray-600">Experience (Years)</label>
+                {{ form.experience }}
+            </div>
+
+            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">
+                Submit
+            </button>
+        </form>
+    </div>
+</body>
+</html>

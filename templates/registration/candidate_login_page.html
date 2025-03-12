@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Marketplace</title>
+    <link rel="icon" type="image/x-icon" href={% static "icons8-favicon-94.png" %}>
+    <link rel="stylesheet" href="{% static "styles.css" %}">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-2xl min-w-60 lg:min-w-96 font-extralight">
+        <h2 class="text-sm lg:text-2xl font-extrabold text-center text-gray-900 mb-6">LOGIN TO YOUR ACCOUNT</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="text-red-500 font-bold flex flex-col items-center">
+                {% if error_message %}{{error_message}}{% endif %}
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="uname">USERNAME</label>
+                {{form.username}}
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="password">PASSWORD</label>
+                {{form.password}}
+            </div>
+            <div class="px-5 flex justify-center">
+                <button type="submit" class="min-w-14 md:min-w-32 lg:min-w-48 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">Login</button>
+            </div>
+        </form>
+        <div class="text-center mt-4 text-gray-600">
+            Don't have an account? <a href="{% url "SignUp Page" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" class="text-blue-500 hover:underline">Sign Up</a>
+        </div>
+    </div>
+</body>
+</html>

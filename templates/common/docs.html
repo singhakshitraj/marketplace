@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+    <link rel="stylesheet" href="{% static "styles.css" %}">
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold mb-6">Job Marketplace API Documentation</h1>
+        <section class="mb-6">
+            <h2 class="text-2xl font-semibold mb-4">Recruiter Endpoints ( ** => Protected Routes )</h2>
+            <ul class="list-disc pl-6">
+                <li><strong>Dashboard:</strong> <code>/</code></li>
+                <li><strong>Login:</strong> <code>/login/</code></li>
+                <li><strong>Logout:</strong> <code>/logout/</code></li>
+                <li><strong>Register:</strong> <code>/register/</code></li>
+                <li><strong>Job Description:</strong> <code>/description/&lt;str:id&gt;/</code></li>
+                <li><strong>**Profile:</strong> <code>/myprofile/</code></li>
+                <li><strong>**Create Job:</strong> <code>/add/</code></li>
+            </ul>
+        </section>
+        
+        <section>
+            <h2 class="text-2xl font-semibold mb-4">Candidate Endpoints</h2>
+            <ul class="list-disc pl-6">
+                <li><strong>Home:</strong> <code>/</code></li>
+                <li><strong>Login:</strong> <code>/login/</code></li>
+                <li><strong>Register:</strong> <code>/register/</code></li>
+                <li><strong>Formatter:</strong> <code>/formatter/</code></li>
+                <li><strong>**Dashboard:</strong> <code>/dashboard/</code></li>
+                <li><strong>**Apply:</strong> <code>/apply/&lt;str:id&gt;/</code></li>
+                <li><strong>**Job Description:</strong> <code>/description/&lt;str:id&gt;/</code></li>
+                <li><strong>**Profile:</strong> <code>/myprofile/</code></li>
+                <li><strong>**Applications:</strong> <code>/applications/</code></li>
+                <li><strong>**Bookmarks:</strong> <code>/bookmarks/</code></li>
+                <li><strong>**Logout:</strong> <code>/logout/</code></li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>

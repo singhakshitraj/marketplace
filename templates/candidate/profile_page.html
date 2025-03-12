@@ -1,0 +1,102 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Description | Marketplace</title>
+    <link rel="stylesheet" href="{% static "styles.css" %}">
+    <link rel="icon" type="image/x-icon" href={% static "icons8-favicon-94.png" %}>
+    {% include "common/navbar.html" %}
+    <style>
+        #md_content,#md_resume {
+            h1, h2, h3 {
+                font-size: 25px;
+                font-weight: bold;
+            }
+            pre{
+                background-color:grey;
+                padding:10px 0px 10px 10px;
+                border-radius:10px;
+                color:white;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="lg:mx-20 overflow-hidden">
+        <!-- Profile Header -->
+        <div class="grid lg:grid-cols-2 grid-cols-1 space-x-2 m-3">
+            <div class="flex justify-center"><img src="{{user.profile_pic.url}}" alt=""></div>
+            <div class="flex flex-col justify-center items-center p-3 my-3">
+                <div class="lg:text-7xl text-3xl py-3">{{ user.name }}</div>
+                <div class="lg:text-4xl text-2xl font-extralight text-gray-700">{{ user.user.email }}</div>
+                <div class="font-thin xl:text-5xl lg:text-4xl md:text-2xl sm:text-xl mb-4 text-gray-600">
+                    Date of Birth: {{ user.dob }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Experiences Section -->
+        <div class="lg:mx-10">
+            <div class="flex justify-center lg:text-4xl text-2xl my-6 text-gray-800">Experiences</div>
+            <div class="m-auto p-5 bg-white text-gray-700 rounded-lg my-3 mx-5 shadow-md">
+                {% if user.experiences %}
+                    <ul class="list-disc list-inside">
+                        {% for experience in user.experiences %}
+                            <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ experience.name }}</h1>
+
+                            <!-- Duration -->
+                            <div class="text-gray-600 text-lg mb-4">
+                                <span class="font-semibold">Duration:</span> {{ experience.start_year }} - {{ experience.end_year }}
+                            </div>
+                    
+                            <!-- Description -->
+                            <div class="mb-4">
+                                <h2 class="text-xl font-semibold text-gray-700 mb-2">Description</h2>
+                                <p class="text-gray-600">{{ experience.description }}</p>
+                            </div>
+                    
+                            <!-- Tech Stack -->
+                            <div class="mb-6">
+                                <h2 class="text-xl font-semibold text-gray-700 mb-2">Tech Stack</h2>
+                                <div class="flex flex-wrap gap-2">
+                                    {% for tech in experience.tech_stack %}
+                                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">{{ tech }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-gray-600">No experiences added yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Markdown Content Section -->
+        <div class="lg:mx-10" id="md_content">
+            <div class="flex justify-center lg:text-4xl text-2xl my-6 text-gray-800">Markdown Content</div>
+            <div class="m-auto p-5 bg-white text-gray-700 rounded-lg my-3 mx-5 shadow-md">
+                {% if md_content %}
+                    <span>{{ md_content | safe }}</span>
+                {% else %}
+                    <p class="text-gray-600">No markdown content uploaded yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Resume Section -->
+        <div class="lg:mx-10" id="md_resume">
+            <div class="flex justify-center lg:text-4xl text-2xl my-6 text-gray-800">Resume</div>
+            <div class="m-auto p-5 bg-white text-gray-700 rounded-lg my-3 mx-5 shadow-md">
+                {% if resume %}
+                    <span>{{resume | safe}}</span>
+                {% else %}
+                    <p class="text-gray-600">No resume uploaded yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>

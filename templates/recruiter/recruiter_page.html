@@ -1,0 +1,43 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter Page | Marketplace</title>
+    <link rel="stylesheet" href="{% static "styles.css" %}">
+    {% include "recruiter/recruiter_navbar.html" %}
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="max-w-6xl mx-auto py-10 px-6">
+        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-6">
+            <div>
+                <h1 class="text-3xl font-bold">{{ recruiter.name }}</h1>
+                <p class="text-gray-600 mt-2">{{ recruiter.description }}</p>
+            </div>
+        </div>
+        
+        <h2 class="text-2xl font-semibold mt-8">Posted Jobs</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+            {% for job in professions %}
+            <a href="{% url "Recruiter Job Description" id=job.id %}">
+                <div class="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition">
+                    <h3 class="text-xl font-semibold">{{ job.name }}</h3>
+                    <p class="text-gray-600 text-sm mt-2">{{ job.description }}</p>
+                    <p class="text-gray-800 font-medium mt-2">📍 {{ job.location }}</p>
+                    <p class="text-gray-700 text-sm">💼 {{ job.profession_type }}</p>
+                    <p class="text-gray-700 text-sm">💰 {{ job.salary|intcomma }} / year</p>
+                    <p class="text-gray-700 text-sm">⏳ Experience: {{ job.experience }} years</p>
+                    <p class="text-gray-500 text-xs mt-2">Posted on {{ job.created_at|date:"M d, Y" }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <footer class="bg-gray-900 text-white text-center fixed bottom-0 w-screen">
+        <p class="text-sm my-3">&copy; 2025 Marketplace. All rights reserved.</p>
+    </footer>
+</body>
+</html>

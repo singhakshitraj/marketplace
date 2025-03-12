@@ -1,0 +1,67 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Description | Marketplace</title>
+    <link rel="stylesheet" href="{% static "styles.css" %}">
+    <link rel="icon" type="image/x-icon" href={% static "icons8-favicon-94.png" %}>
+    {% include "common/navbar.html" %}
+    <style>
+        #md_content {
+            h1, h2, h3 {
+                font-size: 25px;
+                font-weight: bold;
+            }
+            pre{
+                background-color:grey;
+                padding:10px 0px 10px 10px;
+                border-radius:10px;
+                color:white;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="lg:mx-20 overflow-hidden">
+        <div class="flex flex-col items-center p-3 my-3">
+            <div class="lg:text-7xl text-3xl py-3">{{details.name}}</div>
+            <div class="lg:text-2xl text-xl font-thin text-gray-700">{{details.description}}</div>
+            <div class="font-thin xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl mb-4 text-gray-600">
+                {% for domains in details.techstack.all %}
+                    | {{domains}} | 
+                {% endfor %}
+            </div>
+            <div class="lg:text-5xl md:text-3xl text-xl font-light lg:w-screen w-3/5 flex justify-evenly p-3 flex-wrap lg:space-y-0 space-y-3">
+                <div class="p-5 rounded-xl bg-white shadow-md"><div class="flex justify-center">Salary - </div><div class="flex justify-center">{{details.salary|intcomma}}$ per Year</div></div>
+                <div class="p-5 rounded-xl bg-white shadow-md"><div class="flex justify-center">Experience - </div><div class="flex justify-center">{{details.experience}} Years</div></div>
+                <div class="p-5 rounded-xl bg-white shadow-md"><div class="flex justify-center">Location - </div><div class="flex justify-center">{{details.location}}</div></div>
+            </div>
+        </div>
+        <div class="lg:mx-10">
+            <div class="flex justify-center lg:text-4xl text-2xl my-6 text-gray-800">Description</div>
+            <div class="m-auto p-5 bg-white text-gray-700 rounded-lg my-3 mx-5 shadow-md" id="md_content">
+                {{content | safe}}
+            </div>
+        </div>
+        <div class="flex justify-evenly font-extralight xl:text-4xl lg:text-2xl md:text-xl text-sm text-gray-700 my-5">
+            {% if applied %}
+            <button class="bg-white shadow-md lg:p-3 md:p-2 p-1 rounded-lg hover:bg-gray-50 transition duration-300 hover:shadow-2xl" disabled>✅Applied</a>
+            {% else %}
+                <a href="{% url "Apply Now" id=details.id %}" class="bg-white shadow-md lg:p-3 md:p-2 p-1 rounded-lg hover:bg-gray-50 transition duration-300 hover:shadow-2xl">➕Apply Now</a>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                {% if marked %}
+                    <button class="bg-white shadow-md lg:p-3 md:p-2 p-1 rounded-lg hover:bg-gray-50 transition duration-300 hover:shadow-2xl">❌Remove From Bookmark</button>
+                {% else %}
+                    <button class="bg-white shadow-md lg:p-3 md:p-2 p-1 rounded-lg hover:bg-gray-50 transition duration-300 hover:shadow-2xl">➕Add To Bookmark</button>
+                {% endif %}
+            </form>
+            <button class="bg-white shadow-md lg:p-3 md:p-2 p-1 rounded-lg hover:bg-gray-50 transition duration-300 hover:shadow-2xl">🔖Flag As Scam</button>
+        </div>
+    </div>
+</body>
+</html>
