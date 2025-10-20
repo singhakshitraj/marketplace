@@ -12,7 +12,7 @@ from cloudinary.models import CloudinaryField
 class Candidates(models.Model):
     id = models.UUIDField(primary_key=True,auto_created=True,unique=True,editable=False,default=uuid4)
     user = models.OneToOneField(User,on_delete=models.CASCADE,null=False,blank=False)
-    name = models.CharField(null=False,blank=False)
+    name = models.CharField(null=False,blank=False,max_length=100)
     profile_pic = CloudinaryField('image',folder='profilepics')
     experiences = models.JSONField(null=True,blank=True)
     dob = models.DateField(blank=False,null=False,editable=True)
@@ -43,7 +43,7 @@ class UserJobApplication(models.Model):
         
 class WorkExperience(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False)
-    name = models.CharField(null=False,blank=False)
+    name = models.CharField(null=False,blank=False,max_length=100)
     description = models.TextField(blank=True,null=True,max_length=500)
     start_date = models.DateField(blank=False,null=False)
     end_date = models.DateField(blank=True,null=False)
