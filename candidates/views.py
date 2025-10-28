@@ -1,23 +1,24 @@
-import os
-from django.http import Http404 
-from django.shortcuts import render,get_object_or_404,redirect
-from django.contrib.auth.decorators import login_required
-from recruiters.models import Professions
-from .models import Candidates,UserJobApplication,BookmarkedJobs
-from .forms import JobApplicationForm,CandidateRegistrationForm,CustomAuthenticationForm
-from django.conf import settings
 import markdown
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login,logout
-from .exceptions import AuthException,UserAlreadyExistsException
-from .utils import apply_middleware
-from .middleware import CheckCandidateAccountMiddleware
 import requests
-# Create your views here.
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.http import Http404
+from django.shortcuts import render, get_object_or_404, redirect
+from recruiters.models import Professions
+from .exceptions import AuthException, UserAlreadyExistsException
+from .forms import JobApplicationForm, CandidateRegistrationForm, CustomAuthenticationForm
+from .middleware import CheckCandidateAccountMiddleware
+from .models import Candidates, UserJobApplication, BookmarkedJobs
+from .utils import apply_middleware
+from django.http import JsonResponse
 
 
 def first_display_page(request):
     return render(request,'common/home_page.html')
+
+def health_check(request):
+    return JsonResponse({'status':'OK'})
 
 
 @login_required(login_url='/login/')

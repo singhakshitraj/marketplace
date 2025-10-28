@@ -4,6 +4,7 @@ from django.conf.urls import handler404
 
 urlpatterns = [
     path('',view=views.first_display_page),
+    path('health/',view=views.health_check),
     path('dashboard/', view=views.dashboard,name='Dashboard'),
     path('apply/<str:id>/',view=views.applyNow,name='Apply Now'),
     path('description/<str:id>/',view=views.job_description,name='Job Description'),
